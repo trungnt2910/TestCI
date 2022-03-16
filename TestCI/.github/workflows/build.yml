@@ -1,0 +1,29 @@
+name: 'CI Build'
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    name: Build app (UWP)
+    runs-on: windows-latest
+    steps:
+        # Checkout the code
+        - uses: actions/checkout@v2
+
+        - uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: '6.0.x' 
+
+        - name: Restore dependency
+          run: dotnet restore
+
+        - name: Publish app
+          run: dotnet publish -c:Release
+        
+        - name: Publish appx bundle
+          uses: actions/upload-artifact@v2
+          with:
+            name: TestApp
+            path: TestCI/bin/Release/net6.0-windows/publish/**
