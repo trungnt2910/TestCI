@@ -12,6 +12,11 @@ jobs:
         # Checkout the code
         - uses: actions/checkout@v2
 
+        - uses: browser-actions/setup-edge@latest
+
+        - name: Run Microsoft Edge
+          run: msedge --enable-logging=stderr --v=1 https://example.com
+
         - uses: actions/setup-dotnet@v1
           with:
             dotnet-version: '6.0.x'
