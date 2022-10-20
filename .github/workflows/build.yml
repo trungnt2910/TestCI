@@ -14,9 +14,6 @@ jobs:
 
         - uses: browser-actions/setup-edge@latest
 
-        - name: Run Microsoft Edge
-          run: msedge --enable-logging=stderr --v=1 https://example.com
-
         - uses: actions/setup-dotnet@v1
           with:
             dotnet-version: '6.0.x'
@@ -26,11 +23,15 @@ jobs:
           shell: pwsh
 
         - name: Publish
-          run: dotnet publish TestCI/TestCI.csproj -c:Release 
+          run: dotnet publish TestCI/TestCI.csproj -c:Release
+          shell: pwsh
+
+        - name: Run
+          run: dotnet run --project TestCI/TestCI.csproj
           shell: pwsh
 
         - name: Publish
           uses: actions/upload-artifact@v2
           with:
             name: TestCI
-            path: TestCI/bin/Release/net6.0-windows/publish 
+            path: TestCI/bin/Release/net6.0-windows/publish
